@@ -13,14 +13,20 @@
     align-items: center;
 }
 
+img {
+    position: relative;
+    width: 50px;
+    height: 70px;
+}
+
 .container .rocket {
     position: relative;
-    width: 100px;
-    height: 80px;
+    width: 40px;
+    height: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
-    top: 37.5%;
+    top: 37%;
     animation: rocketMovement 0.3s linear infinite;
 }
 
@@ -36,11 +42,11 @@
 .container .rocket::before {
     content: '';
     position: absolute;
-    bottom: -237px;
+    bottom: -230px;
     left: 45%;
-    width: 10px;
-    transform: translateY(-48%);
-    height: 150px;
+    width: 6px;
+    transform: translateY(-88%);
+    height: 115px;
     background: -webkit-linear-gradient(-92deg, #f3562698, transparent);
     -webkit-animation: hueAnimation 1.5s infinite ease-out;
 }
@@ -59,10 +65,10 @@
 .container .rocket::after {
     content: '';
     position: absolute;
-    top: 95px;
-    left: 43%;
-    width: 15px;
-    height: 180px;
+    top: 65px;
+    left: 40%;
+    width: 10px;
+    height: 150px;
     background: linear-gradient(#03aaf7, transparent);
     filter: blur(7px);
     z-index: 1;
