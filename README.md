@@ -2,18 +2,15 @@
 
 //* CREDITS
 
-/- Youtube
-
+/- Youtube \
 Dev King: https://www.youtube.com/channel/UC33whXQsED5bXjbgt-ICQ1Q \
 youtube.video: https://www.youtube.com/watch?v=lvaVbUd9zgc
 
-/- Youtube
-
+/- Youtube \
 ONLINE TUTORIALS: https://www.youtube.com/c/OnlineTutorials4Designers \
 youtube.video: https://www.youtube.com/watch?v=mAewuQPMFI8
 
-/- Stack overflow
-
+/- Stack overflow \
 Endless: https://stackoverflow.com/users/1008999/endless \
 Question: https://stackoverflow.com/questions/33948464/move-an-image-with-javascript-using-mouse-events 
 
