@@ -14,6 +14,12 @@ youtube.video: https://www.youtube.com/watch?v=mAewuQPMFI8
 user.profile (stack-overflow): https://stackoverflow.com/users/1008999/endless \
 Question: https://stackoverflow.com/questions/33948464/move-an-image-with-javascript-using-mouse-events 
 
+
+
+Rocket Vectors by Vecteezy: https://www.vecteezy.com/free-vector/rocket
+
+Icons made by: https://www.freepik.com
+
 *//
 
 
@@ -24,3 +30,5 @@ Link: https://priceless-hopper-c78e49.netlify.app
 
 # github pages
 Link: https://lldeveloperll.github.io/rocket-animated/
+
+

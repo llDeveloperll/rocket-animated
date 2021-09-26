@@ -17,6 +17,7 @@ img {
     position: relative;
     width: 50px;
     height: 70px;
+    filter: invert(100%) sepia(89%) saturate(2%) hue-rotate(28deg) brightness(106%) contrast(101%);
 }
 
 .container .rocket {
@@ -96,3 +97,45 @@ img {
         transform: translateY(200vh)
     }
 }
+
+.container .credits {
+    position: absolute;
+    right:    25px;
+    bottom:   7px;
+}
+
+.container .credits button {
+    box-sizing: border-box;
+    appearance: none;
+    background-color: transparent;
+    border: 1px solid #3240a8;
+    border-radius: 0.6em;
+    color: #3240a8;
+    cursor: pointer;
+    display: flex;
+    align-self: center;
+    font-size: 0.8rem;
+    font-weight: 400;
+    line-height: 0.5;
+    margin: 7px;
+    padding: 1em 1.6em;
+    text-decoration: none;
+    text-align: center;
+    text-transform: uppercase;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+}
+
+  
+.container .credits button:hover, button:focus {
+  color: #fff;
+  outline: 0;
+}
+
+.container .credits button {
+    transition: box-shadow 300ms ease-in-out, color 300ms ease-in-out;
+}
+
+.container .credits button:hover {
+    box-shadow: 0 0 40px 40px #3240a8 inset;
+  }
