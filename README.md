@@ -15,7 +15,8 @@ user.profile (stack-overflow): https://stackoverflow.com/users/1008999/endless \
 Question: https://stackoverflow.com/questions/33948464/move-an-image-with-javascript-using-mouse-events 
 
 
-
+# Images credits
+ 
 Rocket Vectors by Vecteezy: https://www.vecteezy.com/free-vector/rocket
 
 Icons made by: https://www.freepik.com
