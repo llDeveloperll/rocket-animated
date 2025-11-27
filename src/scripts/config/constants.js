@@ -5,18 +5,20 @@ export const SELECTORS = {
     startButton: '[data-action="start-game"]',
     hudHealth: '[data-ui="health"]',
     hudScore: '[data-ui="score"]',
+    hudLives: '[data-ui="lives"]',
     status: '[data-screen-status]'
 };
 
 export const CONFIG = {
     player: {
-        maxHealth: 250,
+        maxHealth: 600,
         baseDamage: 1,
         fireRateMs: 160,
         laserSpeed: 900,
         damageMargin: 36,
         moveSpeed: 1100,
-        chargeShotHoldMs: 1000
+        chargeShotHoldMs: 1000,
+        startLives: 3
     },
     spawns: {
         meteor: 900,
@@ -37,7 +39,8 @@ export const CONFIG = {
         fireRateMs: 1600,
         laserSpeed: 420,
         projectileAngles: [65, 90, 92, 120],
-        integrity: 3
+        integrity: 3,
+        projectileDamage: 90
     },
     powerUps: {
         minScore: 2000,

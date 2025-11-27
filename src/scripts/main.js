@@ -9,6 +9,7 @@ const bootstrap = () => {
         startButton: document.querySelector(SELECTORS.startButton),
         hudHealth: document.querySelector(SELECTORS.hudHealth),
         hudScore: document.querySelector(SELECTORS.hudScore),
+        hudLives: document.querySelector(SELECTORS.hudLives),
         status: document.querySelector(SELECTORS.status)
     };
 

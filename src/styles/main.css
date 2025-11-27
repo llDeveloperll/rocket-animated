@@ -235,6 +235,23 @@ body {
     box-shadow: 0 0 12px rgba(47, 141, 250, 0.7);
 }
 
+.charge-shot {
+    width: 14px;
+    height: 30px;
+    background: linear-gradient(180deg, #63f3ff, #1f9bff);
+    border-radius: 8px;
+    box-shadow: 0 0 25px rgba(31, 155, 255, 0.8);
+}
+
+.laser-beam {
+    position: absolute;
+    width: 14px;
+    background: linear-gradient(180deg, rgba(111, 210, 255, 0.9), rgba(28, 97, 255, 0.85));
+    box-shadow: 0 0 25px rgba(111, 210, 255, 0.8);
+    mix-blend-mode: screen;
+    pointer-events: none;
+}
+
 .enemy-laser {
     width: 4px;
     height: 12px;
@@ -242,6 +259,23 @@ body {
     border-radius: 999px;
     box-shadow: 0 0 14px rgba(255, 184, 94, 0.65);
     transform-origin: center;
+}
+
+.drone {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    background: rgba(21, 92, 173, 0.6);
+    box-shadow: 0 0 12px rgba(21, 92, 173, 0.5);
+    pointer-events: none;
+}
+
+.drone-laser {
+    width: 5px;
+    height: 16px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.8), rgba(96, 205, 255, 0.85));
 }
 
 .power-up {
@@ -258,6 +292,7 @@ body {
     text-transform: uppercase;
     letter-spacing: 0.05em;
     box-shadow: 0 0 12px rgba(111, 208, 255, 0.35);
+    pointer-events: none;
 }
 
 body.is-debug-hitbox [data-hitbox] {
