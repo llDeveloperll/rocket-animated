@@ -19,10 +19,6 @@ const createAimedPattern = (overrides = {}) => () => ({
     ...overrides
 });
 
-const createPhaseState = () => ({
-    phase: Math.random() * Math.PI * 2
-});
-
 export const ENEMY_PHASES = [
     { id: 1, label: 'Aproximação', minScore: 0, spawnFactor: 1.05 },
     { id: 2, label: 'Pressão', minScore: 2600, spawnFactor: 0.95 },
@@ -49,6 +45,7 @@ export const ENEMY_ARCHETYPES = [
                 if (!target) {
                     entity.vx = 0;
                     entity.vy = entity.speed;
+                    entity.rotation = 180;
                     return false;
                 }
                 const centerX = entity.x + entity.width / 2;
@@ -60,6 +57,10 @@ export const ENEMY_ARCHETYPES = [
                 const chaseSpeed = entity.speed * 1.1;
                 entity.vx = normX * chaseSpeed;
                 entity.vy = normY * chaseSpeed;
+                const angleDeg = (Math.atan2(normY, normX) * 180) / Math.PI + 90;
+                if (!Number.isNaN(angleDeg)) {
+                    entity.rotation = angleDeg;
+                }
                 return false;
             }
         }

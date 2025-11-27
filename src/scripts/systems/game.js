@@ -16,8 +16,8 @@ export class Game {
         this.projectiles = new ProjectileManager(dom.area);
         this.enemyProjectiles = new EnemyProjectileManager(dom.area);
         this.threats = new ThreatManager(dom.area, {
-            onEnemyFire: (threat) => {
-                this.enemyProjectiles.spawnBurst(threat);
+            onEnemyFire: (threat, pattern, meta) => {
+                this.enemyProjectiles.firePattern(threat, pattern, meta);
             }
         });
         this.powerUps = new PowerUpManager(this, {
@@ -38,6 +38,7 @@ export class Game {
         this.droneState = { active: false, nextShotAt: 0 };
         this.debugHitTimeout = null;
         this.statusTimeout = null;
+        this.lastDeltaSeconds = 0;
 
         this.loop = this.loop.bind(this);
         this.handlePointerMove = this.handlePointerMove.bind(this);
@@ -210,11 +211,15 @@ export class Game {
         const deltaMs = timestamp - this.lastFrame;
         this.lastFrame = timestamp;
         const deltaSeconds = deltaMs / 1000;
+        this.lastDeltaSeconds = deltaSeconds;
 
         this.player.update(deltaSeconds, this.modifiers.speedMultiplier);
         this.projectiles.update(deltaSeconds, { threats: this.threats.entities });
         this.enemyProjectiles.update(deltaSeconds);
-        this.threats.update(deltaSeconds, deltaMs);
+        this.threats.update(deltaSeconds, deltaMs, {
+            playerPosition: this.player.position,
+            score: this.state.score
+        });
         this.powerUps.update(deltaSeconds, timestamp);
         this.handleFiring(timestamp);
         this.updateDrones(deltaSeconds, timestamp);
@@ -352,11 +357,19 @@ export class Game {
         }
 
         const playerBox = this.player.getHitbox();
+        const enemyDelta = this.lastDeltaSeconds || 0.016;
         for (let i = this.enemyProjectiles.items.length - 1; i >= 0; i -= 1) {
             const projectile = this.enemyProjectiles.items[i];
             if (intersects(projectile, playerBox)) {
-                this.enemyProjectiles.removeAt(i);
-                this.applyDamage(CONFIG.enemy.damage / 2);
+                const damage = projectile.damagePerSecond
+                    ? projectile.damagePerSecond * enemyDelta
+                    : (projectile.damage ?? CONFIG.enemy.projectileDamage ?? CONFIG.enemy.damage / 2);
+                if (damage > 0) {
+                    this.applyDamage(damage);
+                }
+                if (!projectile.persistent) {
+                    this.enemyProjectiles.removeAt(i);
+                }
             }
         }
         for (let tIndex = this.threats.entities.length - 1; tIndex >= 0; tIndex -= 1) {
