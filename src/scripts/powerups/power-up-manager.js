@@ -31,12 +31,11 @@ export class PowerUpManager {
     }
 
     handleScore(score) {
-        if (score < this.nextSpawnScore) {
-            return;
+        while (score >= this.nextSpawnScore) {
+            this.spawnRandomPickup();
+            const gap = randomBetween(CONFIG.powerUps.scoreGapMin, CONFIG.powerUps.scoreGapMax);
+            this.nextSpawnScore += Math.round(gap);
         }
-        this.spawnRandomPickup();
-        const gap = randomBetween(CONFIG.powerUps.scoreGapMin, CONFIG.powerUps.scoreGapMax);
-        this.nextSpawnScore = score + Math.round(gap);
     }
 
     spawnRandomPickup() {
@@ -52,13 +51,15 @@ export class PowerUpManager {
         pickup.dataset.hitbox = 'power-up';
         pickup.dataset.powerUp = def.id;
         pickup.textContent = def.icon;
+        pickup.title = def.label;
         this.root.appendChild(pickup);
         const width = pickup.offsetWidth || 28;
         const height = pickup.offsetHeight || 28;
         const boundsWidth = this.root.clientWidth || window.innerWidth;
         const x = randomBetween(0, Math.max(0, boundsWidth - width));
+        const stamp = typeof performance !== 'undefined' ? performance.now() : Date.now();
         const item = {
-            id: `${def.id}-${performance.now()}`,
+            id: `${def.id}-${stamp}`,
             definition: def,
             el: pickup,
             x,
@@ -106,11 +107,19 @@ export class PowerUpManager {
     }
 
     updateEffects(timestamp) {
+        const expired = [];
         this.activeEffects.forEach((effect, id) => {
             if (timestamp >= effect.expiresAt) {
-                this.callbacks.onExpire(effect.def);
-                this.activeEffects.delete(id);
+                expired.push(id);
             }
+        });
+        expired.forEach((id) => {
+            const effect = this.activeEffects.get(id);
+            if (!effect) {
+                return;
+            }
+            this.callbacks.onExpire(effect.def);
+            this.activeEffects.delete(id);
         });
     }
 
@@ -127,6 +136,7 @@ export class PowerUpManager {
     clear() {
         this.pickups.forEach(pickup => pickup.el.remove());
         this.pickups = [];
+        this.activeEffects.forEach(effect => this.callbacks.onExpire(effect.def));
         this.activeEffects.clear();
         this.nextSpawnScore = CONFIG.powerUps.minScore;
     }
