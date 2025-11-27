@@ -171,7 +171,7 @@ body {
 .rocket::after {
     content: '';
     position: absolute;
-    bottom: -25px;
+    bottom: -105px;
     width: 8px;
     height: 120px;
     border-radius: 20px;
@@ -197,11 +197,11 @@ body {
 }
 
 .meteor {
-    width: 32px;
+    width: 3px;
     height: 72px;
-    background: linear-gradient(180deg, rgba(255, 125, 69, 0.9), rgba(255, 75, 43, 0.6));
+    background: linear-gradient(180deg, rgba(180, 180, 180, 0.9), rgba(255, 255, 255, 0.6));
     border-radius: 50% 50% 40% 40%;
-    box-shadow: 0 0 30px rgba(255, 87, 34, 0.4);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.4);
     animation: meteor-trail 1.8s linear infinite;
 }
 
@@ -212,11 +212,19 @@ body {
 }
 
 .enemy {
-    width: 50px;
-    height: 50px;
-    background: linear-gradient(45deg, #ff3cac, #784ba0, #2b86c5);
-    border-radius: 12px;
-    box-shadow: 0 0 20px rgba(43, 134, 197, 0.55);
+    width: 38px;
+    height: 68px;
+    background: var(--enemy-color, #8fd3ff);
+    -webkit-mask-image: url('../assets/images/rocket.png');
+    mask-image: url('../assets/images/rocket.png');
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    -webkit-mask-position: center;
+    mask-position: center;
+    transform: rotate(180deg);
+    filter: drop-shadow(0 0 14px rgba(0, 0, 0, 0.45));
 }
 
 .laser {
@@ -225,6 +233,43 @@ body {
     background: var(--color-primary);
     border-radius: 999px;
     box-shadow: 0 0 12px rgba(47, 141, 250, 0.7);
+}
+
+.enemy-laser {
+    width: 4px;
+    height: 12px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(255, 176, 80, 0.85));
+    border-radius: 999px;
+    box-shadow: 0 0 14px rgba(255, 184, 94, 0.65);
+    transform-origin: center;
+}
+
+.power-up {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: var(--color-text);
+    font-size: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    box-shadow: 0 0 12px rgba(111, 208, 255, 0.35);
+}
+
+body.is-debug-hitbox [data-hitbox] {
+    outline: 1.5px solid rgba(0, 255, 128, 0.9);
+    outline-offset: 0;
+    mix-blend-mode: lighten;
+    pointer-events: none;
+}
+
+body.is-debug-hitbox [data-hitbox].is-hitbox-alert {
+    outline-color: rgba(255, 64, 64, 0.95);
+    box-shadow: 0 0 10px rgba(255, 64, 64, 0.6);
 }
 
 .star {
