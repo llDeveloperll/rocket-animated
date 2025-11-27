@@ -1,22 +1,37 @@
 <!DOCTYPE html>
+<html lang="pt-BR">
 <head>
-    <title>Rocket-Animated</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rocket Trajectory</title>
     <link rel="stylesheet" href="./src/style.css">
-    <link rel="shortcut icon" href="./src/favicon.png" type="image">
-    <script src="./src/script.js" defer></script>
+    <link rel="shortcut icon" href="./src/favicon.png" type="image/png">
+    <script src="./src/script.js" type="module" defer></script>
 </head>
 <body>
-    <div class="container">
-        <div class="rocket">
-            <img src="./src/rocket.png" >
-        </div>
-        <div class="credits">
-            <button>credits</button>
-        </div>
-    </div>
+    <main class="game-shell" aria-live="polite">
+        <section class="start-screen" data-screen="start" aria-labelledby="start-title">
+            <div class="start-screen__content">
+                <p id="start-title" class="start-screen__title">iniciar trajetória</p>
+                <p class="start-screen__status" data-screen-status></p>
+                <button type="button" class="btn btn-primary" data-action="start-game">Iniciar!</button>
+            </div>
+        </section>
+
+        <section class="hud">
+            <p class="hud__item">Vida <span data-ui="health">250%</span></p>
+            <p class="hud__item">Pontuação <span data-ui="score">0</span></p>
+        </section>
+
+        <section class="container game-area" data-screen="play" aria-label="Zona de combate espacial">
+            <div class="rocket" data-rocket>
+                <img src="./src/rocket.png" alt="Nave pronta para iniciar a trajetória">
+            </div>
+        </section>
+
+        <section class="credits" aria-label="Créditos do projeto">
+            <button type="button">credits</button>
+        </section>
+    </main>
 </body>
-    <script type="text/javascript">
-        document.querySelector('.container').style.visibility='visible';
-        document.querySelector('.rocket').style.visibility='visible';
-    </script>
 </html>
