@@ -4,9 +4,11 @@ import { BackgroundField } from '../entities/background-field.js';
 import { Player } from '../entities/player.js';
 import { ProjectileManager } from '../entities/projectile-manager.js';
 import { EnemyProjectileManager } from '../entities/enemy-projectile-manager.js';
+import { DamageEffectManager } from '../entities/damage-effect-manager.js';
 import { ThreatManager } from '../entities/threat-manager.js';
 import { PowerUpManager } from '../powerups/power-up-manager.js';
 import { POWER_UP_IDS } from '../powerups/catalog.js';
+import { MusicManager } from '../entities/music-manager.js';
 
 export class Game {
     constructor(dom) {
@@ -15,15 +17,20 @@ export class Game {
         this.player = new Player(dom.rocket, dom.area);
         this.projectiles = new ProjectileManager(dom.area);
         this.enemyProjectiles = new EnemyProjectileManager(dom.area);
+        this.damageEffects = new DamageEffectManager(dom.area);
         this.threats = new ThreatManager(dom.area, {
             onEnemyFire: (threat, pattern, meta) => {
                 this.enemyProjectiles.firePattern(threat, pattern, meta);
+            },
+            onEnemyDestroyed: (enemy) => {
+                this.damageEffects.spawn(enemy);
             }
         });
         this.powerUps = new PowerUpManager(this, {
             onActivate: this.handlePowerUpActivated.bind(this),
             onExpire: this.handlePowerUpExpired.bind(this)
         });
+        this.music = new MusicManager('src/assets/gameTrack/main-track.mp3');
         this.state = { score: 0, lives: CONFIG.player.startLives };
         this.input = { pointer: { x: 0, y: 0 }, isFiring: false };
         this.modifiers = this.createDefaultModifiers();
@@ -173,6 +180,7 @@ export class Game {
         this.powerUps.clear();
         this.stopLaserBeam();
         this.clearDrones();
+        this.damageEffects.clear();
         this.chargeState = { isCharging: false, startedAt: 0 };
         this.background.render();
         this.updateHUD();
@@ -183,6 +191,9 @@ export class Game {
         this.isRunning = true;
         this.lastFrame = performance.now();
         this.lastShotAt = 0;
+        this.music.stop();
+        this.music.start();
+        this.music.updateScore(0);
         requestAnimationFrame(this.loop);
     }
 
@@ -197,6 +208,8 @@ export class Game {
         this.powerUps.clear();
         this.stopLaserBeam();
         this.clearDrones();
+        this.music.stop();
+        this.damageEffects.clear();
         this.dom.startScreen?.classList.remove('is-hidden');
         if (this.dom.status) {
             this.dom.status.textContent = `${reason}. Pontuação: ${this.state.score}`;
@@ -221,6 +234,7 @@ export class Game {
             score: this.state.score
         });
         this.powerUps.update(deltaSeconds, timestamp);
+        this.damageEffects.update(deltaMs);
         this.handleFiring(timestamp);
         this.updateDrones(deltaSeconds, timestamp);
         this.updateLaserBeam(deltaSeconds);
@@ -338,6 +352,7 @@ export class Game {
         this.state.score += value;
         this.updateHUD();
         this.powerUps.handleScore(this.state.score);
+        // this.music.updateScore(this.state.score); // Disabled to keep music rate constant
     }
 
     checkCollisions() {

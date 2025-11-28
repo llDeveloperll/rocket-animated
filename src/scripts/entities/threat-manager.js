@@ -14,6 +14,9 @@ export class ThreatManager {
         this.onEnemyFire = typeof options.onEnemyFire === 'function'
             ? options.onEnemyFire
             : null;
+        this.onEnemyDestroyed = typeof options.onEnemyDestroyed === 'function'
+            ? options.onEnemyDestroyed
+            : null;
         this.lastContext = {
             score: 0,
             boundsWidth: 0,
@@ -294,6 +297,9 @@ export class ThreatManager {
         const [entity] = this.entities.splice(index, 1);
         if (entity?.def?.onDestroyed) {
             entity.def.onDestroyed(entity, this.createBehaviorHelpers(entity));
+        }
+        if (entity?.type === 'enemy' && this.onEnemyDestroyed) {
+            this.onEnemyDestroyed(entity);
         }
         if (entity && entity.el) {
             entity.el.remove();

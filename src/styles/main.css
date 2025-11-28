@@ -390,6 +390,17 @@ body {
     background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(129, 247, 209, 0.9));
 }
 
+.damage-effect {
+    position: absolute;
+    width: 96px;
+    height: 96px;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    mix-blend-mode: screen;
+    image-rendering: pixelated;
+    filter: drop-shadow(0 0 12px rgba(255, 176, 94, 0.45));
+}
+
 .drone {
     position: absolute;
     width: 24px;
